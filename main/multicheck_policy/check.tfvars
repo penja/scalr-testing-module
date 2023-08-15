@@ -1,1 +1,1 @@
-check = 22
+other = 22
