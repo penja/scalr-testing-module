@@ -6,7 +6,7 @@ resource "null_resource" "test" {
    }
 }
 
-variable "json_data" = {
+variable "json_data" {
   default = {
     "0" = {
     "key1" = "value1value1value1value1value1value1value1"
