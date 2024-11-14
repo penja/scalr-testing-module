@@ -6,8 +6,9 @@ resource "null_resource" "test" {
    }
 }
 
-null_resources_json = {
-  "0" = {
+variable "json_data" = {
+  default = {
+    "0" = {
     "key1" = "value1value1value1value1value1value1value1"
     "key2" = "value2value2value2value2value2value2value2"
   }
@@ -26,6 +27,7 @@ null_resources_json = {
   "4" = {
      "key1" = "value1value1value1value1value1value1value1"
      "key2" = "value2value2value2value2value2value2value2"
+  }
   }
 }
 
