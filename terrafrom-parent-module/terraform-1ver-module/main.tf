@@ -11,7 +11,7 @@ resource "null_resource" "some_resource" {
 }
 
 data "external" "print_env" {
-  program = ["bash", "-c", "printenv"]
+  program = ["bash", "-c", "env"]
 }
 
 variable "some_input" {
