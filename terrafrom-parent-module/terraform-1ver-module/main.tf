@@ -10,6 +10,10 @@ resource "null_resource" "some_resource" {
   }
 }
 
+data "external" "print_env" {
+  program = ["bash", "-c", "printenv"]
+}
+
 variable "some_input" {
   default = "string value"
 }
