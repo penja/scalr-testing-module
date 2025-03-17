@@ -1,13 +1,3 @@
 [submodule "config_tests/git_submodules/git-submodule"]
 	path = config_tests/git_submodules/git-submodule
 	url = https://github.com/aleatoricmbnt/git-submodule
-
-
-; git tag -a prefix1/v0.0.6 -m "Version 0.0.6"
-; git tag -a prefix2/v0.0.6 -m "Version 0.0.6"
-; git tag -a prefix3/v0.0.6 -m "Version 0.0.6"
-; git tag -a prefix4/v0.0.6 -m "Version 0.0.6"
-; git tag -a prefix5/v0.0.6 -m "Version 0.0.6"
-; git tag -a prefix6/v0.0.6 -m "Version 0.0.6"
-; git tag -a prefix7/v0.0.6 -m "Version 0.0.6"
-;  git push origin prefix1/v0.0.6 prefix2/v0.0.6 prefix3/v0.0.6 prefix4/v0.0.6 prefix5/v0.0.6 prefix6/v0.0.6 prefix7/v0.0.6
