@@ -25,12 +25,6 @@ resource "random_pet" "bucket_name" {
 }
 
 
-
-
-
-
-
-
 resource "random_pet" "optional_bucket_name" {
   
 }
