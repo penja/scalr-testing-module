@@ -23,6 +23,6 @@ variable "max" {
   default = 255
 }
 
-#output "random_int_list" {
-#  value = join(",", random_integer.int[*].id)
-#}
+output "random_int_list" {
+  value = join(",", random_integer.int[*].id)
+}
