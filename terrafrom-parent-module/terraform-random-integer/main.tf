@@ -10,7 +10,7 @@ resource "random_integer" "int" {
 
 variable "count-value" {
   type    = number
-  default = 9
+  default = 10
 }
 
 variable "min" {
