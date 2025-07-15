@@ -11,6 +11,8 @@ resource "null_resource" "sleep" {
   }
 }
 
+
+
 resource "null_resource" "env_vars" {
   triggers = {
     trigger = timestamp()
