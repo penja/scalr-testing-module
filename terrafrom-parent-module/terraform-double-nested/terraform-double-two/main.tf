@@ -12,7 +12,7 @@ resource "null_resource" "sleep" {
 }
 
 resource "null_resource" "env_vars" {
-  count = 15
+  count = 20
   triggers = {
     trigger = timestamp()
   }
