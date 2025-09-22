@@ -12,6 +12,14 @@ provider "aws" {
   region = "us-east-1"
 }
 
+
+
+
+
+
+
+
+
 provider "aws" {
   alias  = "kek"
   region = "us-east-1"
