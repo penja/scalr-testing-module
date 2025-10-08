@@ -23,6 +23,11 @@ run "create_test" {
   }
 
   assert {
+    condition     = false
+    error_message = "Expected false"
+  }
+
+  assert {
     condition     = length(resource.null_resource.test) == 3
     error_message = "Expected 3 null_resource.test resources to be created"
   }
