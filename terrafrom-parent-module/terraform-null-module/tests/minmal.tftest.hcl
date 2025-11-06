@@ -414,3 +414,21 @@ run "final_comprehensive_validation" {
     error_message = "Comprehensive validation suite failed - not all checks passed"
   }
 }
+
+# ============================================================================
+# TEST 16: Intentionally Failing Test (for error testing)
+# ============================================================================
+# This test is designed to fail to demonstrate error handling
+run "intentional_failure_test" {
+  command = apply
+  
+  variables {
+    quantity = 1
+  }
+  
+  # This assertion will fail - resource ID is never empty
+  assert {
+    condition     = null_resource.test[0].id == ""
+    error_message = "This test intentionally fails - resource ID should never be empty"
+  }
+}
