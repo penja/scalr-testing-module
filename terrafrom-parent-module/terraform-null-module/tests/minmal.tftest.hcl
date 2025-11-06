@@ -1,7 +1,3 @@
-terraform {
-  required_version = ">= 1.6"
-}
-
 provider "null" {}
 
 # ============================================================================
@@ -11,18 +7,22 @@ provider "null" {}
 run "resource_creation_success" {
   command = apply
   
+  variables {
+    quantity = 1
+  }
+  
   assert {
-    condition     = can(null_resource.main.id)
+    condition     = can(null_resource.test[0].id)
     error_message = "null_resource must be created with an ID"
   }
   
   assert {
-    condition     = length(null_resource.main.id) > 0
+    condition     = length(null_resource.test[0].id) > 0
     error_message = "null_resource ID should not be empty"
   }
   
   assert {
-    condition     = null_resource.main.id != ""
+    condition     = null_resource.test[0].id != ""
     error_message = "null_resource ID must have a valid value"
   }
 }
@@ -34,15 +34,19 @@ run "resource_creation_success" {
 run "resource_triggers_validation" {
   command = apply
   
+  variables {
+    quantity = 10
+  }
+  
   # Check if triggers are properly set
   assert {
-    condition     = can(null_resource.main.triggers)
+    condition     = can(null_resource.test[0].triggers)
     error_message = "null_resource should have triggers attribute"
   }
   
   # Verify triggers is a map/object
   assert {
-    condition     = try(length(keys(null_resource.main.triggers)) >= 0, false)
+    condition     = try(length(keys(null_resource.test[0].triggers)) >= 0, false)
     error_message = "triggers should be a valid map"
   }
 }
@@ -54,8 +58,12 @@ run "resource_triggers_validation" {
 run "plan_phase_validation" {
   command = plan
   
+  variables {
+    quantity = 1
+  }
+  
   assert {
-    condition     = can(null_resource.main)
+    condition     = length(resource.null_resource.test) == 1
     error_message = "null_resource should be accessible in plan phase"
   }
 }
@@ -67,20 +75,20 @@ run "plan_phase_validation" {
 run "resource_id_consistency" {
   command = apply
   
-  locals {
-    resource_id = null_resource.main.id
+  variables {
+    quantity = 1
   }
   
-  # ID should be a valid UUID format (36 characters with hyphens)
+  # ID should be a valid numeric string format
   assert {
-    condition     = can(regex("^[a-f0-9-]{36}$", local.resource_id))
-    error_message = "Resource ID should be a valid UUID format"
+    condition     = can(regex("^[0-9]+$", null_resource.test[0].id))
+    error_message = "Resource ID should be a valid numeric string format"
   }
   
-  # ID should contain hyphens at standard UUID positions
+  # ID should be a non-empty numeric string
   assert {
-    condition     = can(regex("^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$", local.resource_id))
-    error_message = "Resource ID should follow UUID standard format with hyphens"
+    condition     = length(null_resource.test[0].id) > 0 && can(tonumber(null_resource.test[0].id))
+    error_message = "Resource ID should be a non-empty numeric string"
   }
 }
 
@@ -91,12 +99,12 @@ run "resource_id_consistency" {
 run "multiple_instances_test" {
   command = apply
   
-  locals {
-    instance_1_id = null_resource.main.id
+  variables {
+    quantity = 1
   }
   
   assert {
-    condition     = length(local.instance_1_id) > 0
+    condition     = length(null_resource.test[0].id) > 0
     error_message = "First resource instance should be created"
   }
 }
@@ -108,15 +116,19 @@ run "multiple_instances_test" {
 run "state_management" {
   command = apply
   
+  variables {
+    quantity = 1
+  }
+  
   # Resource should exist in state
   assert {
-    condition     = can(null_resource.main)
+    condition     = can(null_resource.test[0])
     error_message = "null_resource should be managed in state"
   }
   
   # Resource should have an ID (proof it exists in state)
   assert {
-    condition     = null_resource.main.id != null
+    condition     = null_resource.test[0].id != null
     error_message = "Resource state should contain valid ID"
   }
 }
@@ -128,15 +140,19 @@ run "state_management" {
 run "type_safety_validation" {
   command = apply
   
+  variables {
+    quantity = 1
+  }
+  
   # ID should be convertible to string
   assert {
-    condition     = can(tostring(null_resource.main.id))
+    condition     = can(tostring(null_resource.test[0].id))
     error_message = "Resource ID should be a string type"
   }
   
   # ID length should be measurable (valid string)
   assert {
-    condition     = can(length(tostring(null_resource.main.id))) && length(tostring(null_resource.main.id)) > 0
+    condition     = can(length(tostring(null_resource.test[0].id))) && length(tostring(null_resource.test[0].id)) > 0
     error_message = "Resource ID string should be non-empty"
   }
 }
@@ -148,19 +164,19 @@ run "type_safety_validation" {
 run "json_serialization" {
   command = apply
   
-  locals {
-    serialized_id = jsonencode(null_resource.main.id)
+  variables {
+    quantity = 1
   }
   
   # Should be able to serialize the ID to JSON
   assert {
-    condition     = can(jsondecode(local.serialized_id))
+    condition     = can(jsondecode(jsonencode(null_resource.test[0].id)))
     error_message = "Resource ID should be JSON serializable"
   }
   
   # Deserialized value should match original
   assert {
-    condition     = jsondecode(local.serialized_id) == null_resource.main.id
+    condition     = jsondecode(jsonencode(null_resource.test[0].id)) == null_resource.test[0].id
     error_message = "Serialized ID should deserialize to original value"
   }
 }
@@ -172,20 +188,19 @@ run "json_serialization" {
 run "resource_comparison" {
   command = apply
   
-  locals {
-    id_value = null_resource.main.id
-    id_copy  = null_resource.main.id
+  variables {
+    quantity = 1
   }
   
   # Same resource should have equal IDs when compared
   assert {
-    condition     = local.id_value == local.id_copy
+    condition     = null_resource.test[0].id == null_resource.test[0].id
     error_message = "Resource ID should be consistent within same run"
   }
   
   # ID should not be null or empty string
   assert {
-    condition     = local.id_value != "" && local.id_value != null
+    condition     = null_resource.test[0].id != "" && null_resource.test[0].id != null
     error_message = "Resource ID should never be empty or null"
   }
 }
@@ -197,33 +212,31 @@ run "resource_comparison" {
 run "comprehensive_health_check" {
   command = apply
   
-  locals {
-    resource_exists = can(null_resource.main.id)
-    id_is_valid     = can(null_resource.main.id) && null_resource.main.id != ""
-    triggers_valid  = can(null_resource.main.triggers)
+  variables {
+    quantity = 1
   }
   
   # Resource should exist
   assert {
-    condition     = local.resource_exists
+    condition     = can(null_resource.test[0].id)
     error_message = "null_resource must exist"
   }
   
   # ID should be valid
   assert {
-    condition     = local.id_is_valid
+    condition     = can(null_resource.test[0].id) && null_resource.test[0].id != ""
     error_message = "null_resource ID must be valid and non-empty"
   }
   
   # Triggers should be accessible
   assert {
-    condition     = local.triggers_valid
+    condition     = can(null_resource.test[0].triggers)
     error_message = "null_resource triggers must be accessible"
   }
   
   # Complete resource validation
   assert {
-    condition     = local.resource_exists && local.id_is_valid && local.triggers_valid
+    condition     = can(null_resource.test[0].id) && can(null_resource.test[0].id) && null_resource.test[0].id != "" && can(null_resource.test[0].triggers)
     error_message = "null_resource complete health check failed"
   }
 }
@@ -235,36 +248,25 @@ run "comprehensive_health_check" {
 run "output_format_validation" {
   command = apply
   
-  locals {
-    # String representation
-    id_as_string = tostring(null_resource.main.id)
-    
-    # Length in characters
-    id_length = length(null_resource.main.id)
-    
-    # As map entry (for output object compatibility)
-    id_in_map = {
-      resource_id = null_resource.main.id
-      resource_type = "null_resource"
-      resource_name = "main"
-    }
+  variables {
+    quantity = 1
   }
   
   # String conversion should work
   assert {
-    condition     = length(local.id_as_string) > 0
+    condition     = length(tostring(null_resource.test[0].id)) > 0
     error_message = "ID string representation should be non-empty"
   }
   
-  # UUID should be 36 characters
+  # ID should be a non-empty string
   assert {
-    condition     = local.id_length == 36
-    error_message = "UUID should be exactly 36 characters long"
+    condition     = length(null_resource.test[0].id) > 0
+    error_message = "Resource ID should be a non-empty string"
   }
   
   # Map should contain all fields
   assert {
-    condition     = can(local.id_in_map.resource_id) && can(local.id_in_map.resource_type) && can(local.id_in_map.resource_name)
+    condition     = can({ resource_id = null_resource.test[0].id, resource_type = "null_resource", resource_name = "test" })
     error_message = "Resource map should contain all expected fields"
   }
 }
@@ -276,20 +278,19 @@ run "output_format_validation" {
 run "edge_case_handling" {
   command = apply
   
-  locals {
-    # Try to access non-existent trigger (should fail gracefully)
-    safe_trigger_access = try(null_resource.main.triggers.nonexistent, "default")
+  variables {
+    quantity = 1
   }
   
   # Safe access should provide default value
   assert {
-    condition     = local.safe_trigger_access == "default"
+    condition     = try(null_resource.test[0].triggers.nonexistent, "default") == "default"
     error_message = "Safe access to non-existent triggers should return default"
   }
   
   # Resource ID should always exist and be accessible
   assert {
-    condition     = try(null_resource.main.id, "") != ""
+    condition     = try(null_resource.test[0].id, "") != ""
     error_message = "Resource ID should always be safely accessible"
   }
 }
@@ -301,38 +302,30 @@ run "edge_case_handling" {
 run "data_type_validation" {
   command = apply
   
-  locals {
-    # Check if ID is string
-    is_string = can(regex(".", null_resource.main.id))
-    
-    # Check if can be used in string interpolation
-    interpolated = "Resource ID is: ${null_resource.main.id}"
-    
-    # Check if can be used in collections
-    in_list = [null_resource.main.id]
-    in_map  = { id = null_resource.main.id }
+  variables {
+    quantity = 1
   }
   
   # ID should match regex (be a string)
   assert {
-    condition     = local.is_string
+    condition     = can(regex(".", null_resource.test[0].id))
     error_message = "Resource ID should be string type"
   }
   
   # String interpolation should work
   assert {
-    condition     = length(local.interpolated) > 14
+    condition     = length("Resource ID is: ${null_resource.test[0].id}") > 14
     error_message = "Resource ID should work in string interpolation"
   }
   
   # Should work in collections
   assert {
-    condition     = length(local.in_list) == 1 && local.in_list[0] != ""
+    condition     = length([null_resource.test[0].id]) == 1 && [null_resource.test[0].id][0] != ""
     error_message = "Resource ID should work in lists"
   }
   
   assert {
-    condition     = can(local.in_map.id) && local.in_map.id != ""
+    condition     = can({ id = null_resource.test[0].id }.id) && { id = null_resource.test[0].id }.id != ""
     error_message = "Resource ID should work in maps"
   }
 }
@@ -344,23 +337,19 @@ run "data_type_validation" {
 run "metadata_inspection" {
   command = apply
   
-  locals {
-    # Capture complete resource state
-    resource_state = {
-      id       = null_resource.main.id
-      triggers = null_resource.main.triggers
-    }
+  variables {
+    quantity = 1
   }
   
   # Resource state should be complete
   assert {
-    condition     = can(local.resource_state.id) && can(local.resource_state.triggers)
+    condition     = can(null_resource.test[0].id) && can(null_resource.test[0].triggers)
     error_message = "Resource state should contain id and triggers"
   }
   
   # Both components should be valid
   assert {
-    condition     = local.resource_state.id != "" && local.resource_state.triggers != null
+    condition     = null_resource.test[0].id != "" && null_resource.test[0].triggers != null
     error_message = "Resource metadata should be fully populated"
   }
 }
@@ -372,76 +361,56 @@ run "metadata_inspection" {
 run "final_comprehensive_validation" {
   command = apply
   
-  locals {
-    # Comprehensive validation object
-    validation_results = {
-      # Identity checks
-      has_id              = can(null_resource.main.id) && length(null_resource.main.id) > 0
-      id_format_valid     = can(regex("^[a-f0-9-]{36}$", null_resource.main.id))
-      
-      # Type checks
-      id_is_string        = can(tostring(null_resource.main.id))
-      
-      # Serialization checks
-      json_serializable   = can(jsondecode(jsonencode(null_resource.main.id)))
-      
-      # State checks
-      triggers_accessible = can(null_resource.main.triggers)
-      
-      # Consistency checks
-      id_persists         = null_resource.main.id == null_resource.main.id
-    }
-    
-    # Overall result
-    all_tests_pass = (
-      local.validation_results.has_id &&
-      local.validation_results.id_format_valid &&
-      local.validation_results.id_is_string &&
-      local.validation_results.json_serializable &&
-      local.validation_results.triggers_accessible &&
-      local.validation_results.id_persists
-    )
+  variables {
+    quantity = 1
   }
   
   # Identity should exist and be valid
   assert {
-    condition     = local.validation_results.has_id
+    condition     = can(null_resource.test[0].id) && length(null_resource.test[0].id) > 0
     error_message = "Resource must have valid ID"
   }
   
-  # Format should be correct
+  # Format should be correct (numeric string)
   assert {
-    condition     = local.validation_results.id_format_valid
-    error_message = "Resource ID format must be valid UUID"
+    condition     = can(regex("^[0-9]+$", null_resource.test[0].id))
+    error_message = "Resource ID format must be valid numeric string"
   }
   
   # Type should be string
   assert {
-    condition     = local.validation_results.id_is_string
+    condition     = can(tostring(null_resource.test[0].id))
     error_message = "Resource ID must be string type"
   }
   
   # Should be serializable
   assert {
-    condition     = local.validation_results.json_serializable
+    condition     = can(jsondecode(jsonencode(null_resource.test[0].id)))
     error_message = "Resource ID must be JSON serializable"
   }
   
   # Triggers must be accessible
   assert {
-    condition     = local.validation_results.triggers_accessible
+    condition     = can(null_resource.test[0].triggers)
     error_message = "Resource triggers must be accessible"
   }
   
   # Must be consistent
   assert {
-    condition     = local.validation_results.id_persists
+    condition     = null_resource.test[0].id == null_resource.test[0].id
     error_message = "Resource ID must persist consistently"
   }
   
   # Overall comprehensive check
   assert {
-    condition     = local.all_tests_pass
+    condition     = (
+      can(null_resource.test[0].id) && length(null_resource.test[0].id) > 0 &&
+      can(regex("^[0-9]+$", null_resource.test[0].id)) &&
+      can(tostring(null_resource.test[0].id)) &&
+      can(jsondecode(jsonencode(null_resource.test[0].id))) &&
+      can(null_resource.test[0].triggers) &&
+      null_resource.test[0].id == null_resource.test[0].id
+    )
     error_message = "Comprehensive validation suite failed - not all checks passed"
   }
 }
