@@ -432,3 +432,66 @@ run "intentional_failure_test" {
     error_message = "This test intentionally fails - resource ID should never be empty"
   }
 }
+
+# ============================================================================
+# TEST 17: Skipped Errored Test
+# ============================================================================
+# This test will error and will be skipped if previous tests fail
+# (Terraform automatically skips subsequent tests when a previous test fails)
+run "skipped_errored_test" {
+  command = apply
+  
+  variables {
+    quantity = 1
+  }
+  
+  # This assertion will fail and cause the test to be marked as errored
+  # If previous tests fail, this test will be skipped
+  assert {
+    condition     = null_resource.test[0].id == "invalid-id"
+    error_message = "This test intentionally fails - resource ID will never match invalid-id"
+  }
+}
+
+# ============================================================================
+# TEST 18: Skipped Test with Error Condition  
+# ============================================================================
+# This test will be skipped because it references a non-existent resource
+# that causes an error during evaluation before assertions can run
+run "skipped_with_error" {
+  command = apply
+  
+  variables {
+    quantity = 1
+  }
+  
+  # This will cause an error during evaluation because we're trying to access
+  # a resource that doesn't exist, which should cause the test to error/skip
+  # Note: This test may show as "fail" in some test frameworks, but the
+  # error occurs during resource evaluation, not just assertion failure
+  assert {
+    condition     = null_resource.nonexistent[0].id != ""
+    error_message = "This test errors because null_resource.nonexistent doesn't exist"
+  }
+}
+
+# ============================================================================
+# TEST 19: Skipped Test
+# ============================================================================
+# This test demonstrates a skipped test scenario
+# Note: In OpenTofu/Terraform test framework, tests show as "skip" when
+# they cannot run due to configuration errors or when previous tests
+# fail during initialization phase. This test uses an invalid variable
+# type to cause initialization to fail and be skipped.
+run "skipped_test" {
+  command = plan  # Using plan to catch errors earlier
+  
+  variables {
+    quantity = "invalid"  # Invalid type - should be number, causes error during validation
+  }
+  
+  assert {
+    condition     = length(resource.null_resource.test) > 0
+    error_message = "This test should be skipped due to invalid variable"
+  }
+}
