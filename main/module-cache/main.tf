@@ -17,9 +17,9 @@ module "random-pet-git" {
   source = "git::https://github.com/penja/scalr-testing-module.git//terrafrom-parent-module/terraform-random-pet?ref=v1.0.14"
 }
 
-module "integer-git" {
-  source = "git::https://github.com/penja/scalr-testing-module.git//terrafrom-parent-module/terraform-random-integer?ref=v1.0.14"
-}
+#module "integer-git" {
+#  source = "git::https://github.com/penja/scalr-testing-module.git//terrafrom-parent-module/terraform-random-integer?ref=v1.0.14"
+#}
 
 
 #module "data-git" {
