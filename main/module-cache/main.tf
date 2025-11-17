@@ -22,13 +22,13 @@ module "integer-git" {
 }
 
 
-module "data-git" {
-  source = "git::https://github.com/penja/scalr-testing-module.git//terrafrom-parent-module/terraform-readme-data?ref=v1.0.14"
-
-  # Set 1 required variable below.
-  # Some variable description
-  not_a_trigger = "test-var-git"
-}
+#module "data-git" {
+#  source = "git::https://github.com/penja/scalr-testing-module.git//terrafrom-parent-module/terraform-readme-data?ref=v1.0.14"
+#
+#  # Set 1 required variable below.
+#  # Some variable description
+#  not_a_trigger = "test-var-git"
+#}
 
 
 module "integer" {
