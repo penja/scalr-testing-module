@@ -13,8 +13,24 @@ resource "null_resource" "short_sleep" {
   }
 }
 
-module "random-pet" {
+module "random-pet-git" {
   source = "git::https://github.com/penja/scalr-testing-module.git//terrafrom-parent-module/terraform-random-pet?ref=v1.0.14"
+}
+
+module "integer-git" {
+  source = "git::https://github.com/penja/scalr-testing-module.git//integer/random?ref=v1.0.14"
+}
+
+module "pet-git" {
+  source = "git::https://github.com/penja/scalr-testing-module.git//pet/random?ref=v1.0.14"
+}
+
+module "data-git" {
+  source = "git::https://github.com/penja/scalr-testing-module.git//data/readme?ref=v1.0.14"
+
+  # Set 1 required variable below.
+  # Some variable description
+  not_a_trigger = "test-var-git"
 }
 
 
