@@ -18,3 +18,14 @@ module "pet" {
 	source  = "mainiacp.ape.testenv.scalr.dev/test/pet/random"
 	version = "1.0.14"
 }
+
+
+module "data" {
+	source  = "mainiacp.ape.testenv.scalr.dev/test/data/readme"
+	version = "1.0.14"
+
+	# Set 1 required variable below.
+
+	# Some variable description
+ 	not_a_trigger = "test-var"
+}
