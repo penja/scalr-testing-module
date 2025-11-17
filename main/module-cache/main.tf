@@ -1,6 +1,15 @@
-resource "null_resource" "test" {
+variable "sleep_time" {
+  type = number
+  default = 5
+}
+
+
+resource "null_resource" "short_sleep" {
   triggers = {
     always = "${timestamp()}"
+  }
+  provisioner "local-exec" {
+    command = "sleep ${var.sleep_time}"
   }
 }
 
