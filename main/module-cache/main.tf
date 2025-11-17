@@ -14,6 +14,7 @@ resource "null_resource" "short_sleep" {
 }
 
 module "random-pet-git" {
+  count = 5
   source = "git::https://github.com/penja/scalr-testing-module.git//terrafrom-parent-module/terraform-random-pet?ref=v1.0.14"
 }
 
