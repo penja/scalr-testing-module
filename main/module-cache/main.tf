@@ -10,6 +10,6 @@ module "random-pet" {
 
 
 module "integer" {
-	source  = "mainiacp.ape.testenv.scalr.dev/tfenv1/integer/random"
+	source  = "mainiacp.ape.testenv.scalr.dev/test/integer/random"
 	version = "1.0.14"
 }
