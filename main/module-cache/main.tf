@@ -13,3 +13,8 @@ module "integer" {
 	source  = "mainiacp.ape.testenv.scalr.dev/test/integer/random"
 	version = "1.0.14"
 }
+
+module "pet" {
+	source  = "mainiacp.ape.testenv.scalr.dev/test/pet/random"
+	version = "1.0.14"
+}
