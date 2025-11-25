@@ -6,6 +6,6 @@ module "double-two" {
   source = "./terraform-double-two/"
 }
 
-module "parent" {
-  source = "./../../main.tf"
+module "parent_folder" {
+  source = "./../terraform-1ver-module"
 }
