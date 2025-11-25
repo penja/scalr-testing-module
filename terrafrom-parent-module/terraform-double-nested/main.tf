@@ -7,5 +7,5 @@ module "double-two" {
 }
 
 module "parent" {
-  source = "../main.tf"
+  source = "../../main.tf"
 }
