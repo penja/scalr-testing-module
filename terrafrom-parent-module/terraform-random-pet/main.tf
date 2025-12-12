@@ -1,4 +1,4 @@
-resource "random_pet" "new_pet_commit_2" {
+resource "random_pet" "before" {
   keepers = {
     timestamp = timestamp()
   }
