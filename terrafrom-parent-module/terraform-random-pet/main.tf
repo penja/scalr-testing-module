@@ -1,4 +1,4 @@
-resource "random_pet" "before" {
+resource "random_pet" "after" {
   keepers = {
     timestamp = timestamp()
   }
