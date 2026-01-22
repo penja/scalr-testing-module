@@ -11,7 +11,7 @@ module "flat_from_repo" {
 
 variable "sleep_time" {
   type        = number
-  default     = 90
+  default     = 60
   description = "Sleep duration in seconds"
 }
 
