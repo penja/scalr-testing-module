@@ -8,7 +8,7 @@ resource "random_pet" "new" {
 
 variable "sleep_time" {
   type        = number
-  default     = 120
+  default     = 55
   description = "Sleep duration in seconds"
 }
 
