@@ -5,6 +5,9 @@ resource "random_pet" "new" {
   }
 }
 
+module "flat_from_repo" {
+  source = "git::https://github.com/aleatoricmbnt/terraform-flat-module.git"
+}
 
 variable "sleep_time" {
   type        = number
