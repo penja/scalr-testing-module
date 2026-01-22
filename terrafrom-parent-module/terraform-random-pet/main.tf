@@ -7,13 +7,13 @@ resource "random_pet" "new" {
 
 
 variable "sleep_time" {
-  count = 20
   type        = number
   default     = 240
   description = "Sleep duration in seconds"
 }
 
 resource "time_sleep" "wait" {
+  count = 20
   create_duration = format("%ds", var.sleep_time)
 
   triggers = {
