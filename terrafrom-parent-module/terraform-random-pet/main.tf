@@ -1,5 +1,5 @@
 resource "random_pet" "new" {
-  count = 20000
+  count = 10000
   keepers = {
     timestamp = timestamp()
   }
