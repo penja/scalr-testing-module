@@ -1,5 +1,5 @@
 variable "sleep_time" {
-  default = 20
+  default = 10
 }
 
 resource "null_resource" "sleep" {
