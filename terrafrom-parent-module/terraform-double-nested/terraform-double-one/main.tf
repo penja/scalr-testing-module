@@ -3,6 +3,8 @@ variable "string" {
   default = "stringValue"
 }
 
+
+
 variable "boolean" {
   type    = bool
   default = false
