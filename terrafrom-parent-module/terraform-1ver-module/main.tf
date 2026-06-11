@@ -12,4 +12,4 @@ variable "some_input" {
 
 output "some_output" {
   value = null_resource.some_resource.id
-}
+
