@@ -69,22 +69,4 @@ module "mod_011" {
   quantity = 1
 }
 
-module "mod_012" {
-  source   = "git::https://github.com/penja/scalr-testing-module//terrafrom-parent-module/terraform-null-module?ref=master"
-  quantity = 1
-}
 
-module "mod_013" {
-  source   = "git::https://github.com/penja/scalr-testing-module//terrafrom-parent-module/terraform-null-module?ref=master"
-  quantity = 1
-}
-
-module "mod_014" {
-  source   = "git::https://github.com/penja/scalr-testing-module//terrafrom-parent-module/terraform-null-module?ref=master"
-  quantity = 1
-}
-
-module "mod_015" {
-  source   = "git::https://github.com/penja/scalr-testing-module//terrafrom-parent-module/terraform-null-module?ref=master"
-  quantity = 1
-}
