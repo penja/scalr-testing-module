@@ -59,12 +59,110 @@ module "mod_009" {
   quantity = 1
 }
 
-
 module "mod_010" {
   source   = "git::https://github.com/penja/scalr-testing-module//terrafrom-parent-module/terraform-null-module?ref=master"
   quantity = 1
 }
 
+module "mod_011" {
+  source   = "git::https://github.com/penja/scalr-testing-module//terrafrom-parent-module/terraform-null-module?ref=master"
+  quantity = 1
+}
+
+module "mod_012" {
+  source   = "git::https://github.com/penja/scalr-testing-module//terrafrom-parent-module/terraform-null-module?ref=master"
+  quantity = 1
+}
+
+module "mod_013" {
+  source   = "git::https://github.com/penja/scalr-testing-module//terrafrom-parent-module/terraform-null-module?ref=master"
+  quantity = 1
+}
+
+module "mod_014" {
+  source   = "git::https://github.com/penja/scalr-testing-module//terrafrom-parent-module/terraform-null-module?ref=master"
+  quantity = 1
+}
+
+module "mod_015" {
+  source   = "git::https://github.com/penja/scalr-testing-module//terrafrom-parent-module/terraform-null-module?ref=master"
+  quantity = 1
+}
+
+module "mod_016" {
+  source   = "git::https://github.com/penja/scalr-testing-module//terrafrom-parent-module/terraform-null-module?ref=master"
+  quantity = 1
+}
+
+module "mod_017" {
+  source   = "git::https://github.com/penja/scalr-testing-module//terrafrom-parent-module/terraform-null-module?ref=master"
+  quantity = 1
+}
+
+module "mod_018" {
+  source   = "git::https://github.com/penja/scalr-testing-module//terrafrom-parent-module/terraform-null-module?ref=master"
+  quantity = 1
+}
+
+module "mod_019" {
+  source   = "git::https://github.com/penja/scalr-testing-module//terrafrom-parent-module/terraform-null-module?ref=master"
+  quantity = 1
+}
+
+module "mod_020" {
+  source   = "git::https://github.com/penja/scalr-testing-module//terrafrom-parent-module/terraform-null-module?ref=master"
+  quantity = 1
+}
+
+module "mod_21" {
+  source   = "git::https://github.com/penja/scalr-testing-module//terrafrom-parent-module/terraform-null-module?ref=master"
+  quantity = 1
+}
+
+module "mod_22" {
+  source   = "git::https://github.com/penja/scalr-testing-module//terrafrom-parent-module/terraform-null-module?ref=master"
+  quantity = 1
+}
 
 
+module "mod_23" {
+  source   = "git::https://github.com/penja/scalr-testing-module//terrafrom-parent-module/terraform-null-module?ref=master"
+  quantity = 1
+}
 
+
+module "mod_24" {
+  source   = "git::https://github.com/penja/scalr-testing-module//terrafrom-parent-module/terraform-null-module?ref=master"
+  quantity = 1
+}
+
+
+module "mod_25" {
+  source   = "git::https://github.com/penja/scalr-testing-module//terrafrom-parent-module/terraform-null-module?ref=master"
+  quantity = 1
+}
+
+module "mod_26" {
+  source   = "git::https://github.com/penja/scalr-testing-module//terrafrom-parent-module/terraform-null-module?ref=master"
+  quantity = 1
+}
+
+module "mod_27" {
+  source   = "git::https://github.com/penja/scalr-testing-module//terrafrom-parent-module/terraform-null-module?ref=master"
+  quantity = 1
+}
+
+module "mod_28" {
+  source   = "git::https://github.com/penja/scalr-testing-module//terrafrom-parent-module/terraform-null-module?ref=master"
+  quantity = 1
+}
+
+module "mod_29" {
+  source   = "git::https://github.com/penja/scalr-testing-module//terrafrom-parent-module/terraform-null-module?ref=master"
+  quantity = 1
+}
+
+module "mod_30" {
+  source   = "git::https://github.com/penja/scalr-testing-module//terrafrom-parent-module/terraform-null-module?ref=master"
+  quantity = 1
+}
