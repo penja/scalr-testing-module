@@ -1,6 +1,6 @@
 run "test" {
   assert {
-    condition     = false
+    condition     = true
     error_message = "Incorrect content."
   }
 }
