@@ -1,0 +1,3 @@
+[submodule "broken-module"]
+	path = broken-module
+	url = https://github.com/scalr-39760-nonexistent/broken-module.git
