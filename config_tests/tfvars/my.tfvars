@@ -1,1 +1,0 @@
-parent-var = "value of the tfvars in parent folder"
