@@ -1,3 +1,3 @@
-[submodule "config_tests/git_submodules/git-submodule"]
-	path = config_tests/git_submodules/git-submodule
-	url = https://github.com/aleatoricmbnt/git-submodule
+[submodule "broken-39760"]
+	path = broken-39760
+	url = https://github.com/penja/this-repo-does-not-exist-39760.git
